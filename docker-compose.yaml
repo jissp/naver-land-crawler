@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  naver-land-crawler:
+    container_name: naver-land-crawler
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - .:/app
+    networks:
+      - naver-land-crawler-network
+    depends_on:
+      - mysql
+      - redis
+  mysql:
+    container_name: mysql
+    image: mysql:8.4.1
+    command:
+      - --skip-character-set-client-handshake
+    environment:
+      MYSQL_DATABASE: 'localhost'
+      MYSQL_ROOT_PASSWORD: '!@#localhost'
+      MYSQL_USER: 'crawler'
+      MYSQL_PASSWORD: '!@#crawler'
+    ports:
+      - '3306:3306'
+    networks:
+      - naver-land-crawler-network
+  redis:
+    container_name: redis
+    image: redis:7.2.5
+    ports:
+      - '6379:6379'
+    networks:
+      - naver-land-crawler-network
+networks:
+  naver-land-crawler-network:
+    driver: bridge
