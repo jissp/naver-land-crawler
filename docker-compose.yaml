@@ -15,6 +15,8 @@ services:
   mysql:
     container_name: mysql
     image: mysql:8.4.1
+    command:
+      - --mysql_native_password
     environment:
       MYSQL_DATABASE: 'localhost'
       MYSQL_ROOT_PASSWORD: '!@#localhost'
