@@ -5,6 +5,7 @@ import { BullModule, BullRootModuleOptions } from '@nestjs/bull';
 import configuration from './configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { AppService } from './app.service';
                 return configService.get<BullRootModuleOptions>('redis');
             },
         }),
+        ScheduleModule.forRoot(),
     ],
     controllers: [AppController],
     providers: [AppService],
