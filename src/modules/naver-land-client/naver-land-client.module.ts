@@ -1,7 +1,15 @@
 import { Module } from '@nestjs/common';
-import { NaverLandClusterClient, NaverLandFrontClient } from './clients';
+import {
+    NaverLandClusterClient,
+    NaverLandFrontClient,
+    NaverLandMapClient,
+} from './clients';
 
-const clients = [NaverLandClusterClient, NaverLandFrontClient];
+const clients = [
+    NaverLandClusterClient,
+    NaverLandFrontClient,
+    NaverLandMapClient,
+];
 
 @Module({
     providers: [...clients],
