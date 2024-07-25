@@ -6,6 +6,7 @@ export class ArticleListRequestDto {
     lft!: number;
     top!: number;
     rgt!: number;
+    cortarNo?: string; // 법정동코드
     rletTpCd?: string; // APT%3AOPST
     tradTpCd?: string; // A1%3AB2
     spcMin?: number;

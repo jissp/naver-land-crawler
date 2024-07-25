@@ -8,6 +8,10 @@ export class NaverLandClusterClient extends NaverLandClientAbstract {
         super('https://m.land.naver.com');
     }
 
+    /**
+     * 부동산 매물 목록 조회 API
+     * @param request
+     */
     public async getArticleList(
         request: ArticleListRequestDto,
     ): Promise<ArticleListResponseDto> {
