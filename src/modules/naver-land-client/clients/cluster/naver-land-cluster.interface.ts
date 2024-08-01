@@ -1,12 +1,66 @@
+import { RealEstateTypeCode, TradeType } from '@modules/naver-land-client';
+
+export enum SearchRealEstateTypeCode {
+    아파트 = 'APT',
+    오피스텔 = 'OPST',
+    단독_다가구 = 'DDDGG',
+    전원주택 = 'JWJT',
+}
+
+export enum RealEstateTypeName {
+    '아파트' = '아파트',
+    '오피스텔' = '오피스텔',
+    '빌라' = '빌라',
+    '아파트분양권' = '아파트분양권',
+    '오피스텔분양권' = '오피스텔분양권',
+    '재건축' = '재건축',
+    '전원주택' = '전원주택',
+    '단독/다가구' = '단독/다가구',
+    '상가주택' = '상가주택',
+    '한옥주택' = '한옥주택',
+    '재개발' = '재개발',
+    '원룸' = '원룸',
+    '고시원' = '고시원',
+    '상가' = '상가',
+    '사무실' = '사무실',
+    '공장/창고' = '공장/창고',
+    '건물' = '건물',
+    '토지' = '토지',
+    '지식산업센터' = '지식산업센터',
+}
+
+export type Tags = DuplexTag | RoomTag | CompletionYearTag;
+
+export enum DuplexTag {
+    복층 = '복층',
+}
+
+export enum RoomTag {
+    방한개 = '방한개',
+    방두개 = '방두개',
+    방세개 = '방세개',
+    방네개이상 = '방네개이상',
+}
+
+export enum CompletionYearTag {
+    '2년이내' = '2년이내',
+    '4년이내' = '4년이내',
+    '10년이내' = '10년이내',
+    '15년이내' = '15년이내',
+    '25년이내' = '25년이내',
+    '25년이상' = '25년이상',
+    '30년이상' = '30년이상',
+}
+
 export interface ArticleItem {
     atclNo: string; // '2435257506';
     cortarNo: string; // '1156011300';
     atclNm: string; // '더하우스';
     atclStatCd: string; // 'R0';
-    rletTpCd: string; // 'A02';
+    rletTpCd: RealEstateTypeCode; // 'A02';
     uprRletTpCd: string; // 'A02';
-    rletTpNm: string; // '오피스텔';
-    tradTpCd: string; // 'B2';
+    rletTpNm: RealEstateTypeName;
+    tradTpCd: TradeType; // 'B2';
     tradTpNm: string; // '월세';
     vrfcTpCd: string; // 'OWNER';
     flrInfo: string; // '7/10';
@@ -15,7 +69,7 @@ export interface ArticleItem {
     hanPrc: string; // '5,000';
     spc1: string; // '46';
     spc2: string; // '29.93';
-    direction: string; // '남향';
+    direction?: string; // '남향';
     atclCfmYmd: string; // '24.07.17.';
     repImgUrl: string; // '/20240717_27/land_naver_17212155634169wpKB_JPEG/1707982294352.jpg';
     repImgTpCd: string; // '10';
