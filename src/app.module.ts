@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { BullModule, BullRootModuleOptions } from '@nestjs/bull';
-import configuration from './configuration';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import configuration from './configuration';
+import { QueueModule } from '@modules/queue';
+import { SchedulerModule } from '@modules/scheduler';
+import { CrawlerModule } from '@modules/crawler';
 
 @Module({
     imports: [
@@ -19,16 +19,12 @@ import { ScheduleModule } from '@nestjs/schedule';
                 return configService.get<TypeOrmModuleOptions>('database');
             },
         }),
-        BullModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: async (configService: ConfigService) => {
-                return configService.get<BullRootModuleOptions>('redis');
-            },
-        }),
+        QueueModule.forRoot(),
         ScheduleModule.forRoot(),
+        SchedulerModule,
+        CrawlerModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {}

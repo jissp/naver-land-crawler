@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    volumes:
-      - .:/app
     networks:
       - naver-land-crawler-network
     depends_on:
@@ -22,6 +20,11 @@ services:
       MYSQL_ROOT_PASSWORD: '!@#localhost'
       MYSQL_USER: 'crawler'
       MYSQL_PASSWORD: '!@#crawler'
+      LANG: ko_KR.UTF-8
+      LANGUAGE: ko_KR:ko
+      LC_ALL: ko_KR.UTF-8
+    volumes:
+      - ./docker/mysql/init/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '3306:3306'
     networks:

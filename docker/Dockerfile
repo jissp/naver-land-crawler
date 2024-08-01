@@ -15,7 +15,7 @@ FROM node:22.4.0-alpine3.20 as runner
 
 RUN npm install -g pm2
 
-WORKDIR /
+WORKDIR /app
 
 COPY --from=builder /dist ./dist
 COPY --from=builder /node_modules ./node_modules

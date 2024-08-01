@@ -31,7 +31,7 @@ export type FrontApiResult<T extends FrontApiOperationId> =
             : never;
 
 interface ArticleBasicInfoResult {
-    priceInfo: {
+    priceInfo?: {
         price: number;
         previousDeposit: number;
         previousMonthlyRent: number;
@@ -39,7 +39,7 @@ interface ArticleBasicInfoResult {
         loanCode: string;
         loanTypeCode?: LoanTypeCode;
     };
-    detailInfo: {
+    detailInfo?: {
         facilityInfo: {
             life: FacilityLifeType[];
             security: FacilitySecurityType[];
@@ -118,7 +118,7 @@ interface ArticleBasicInfoResult {
 }
 
 interface ArticleKeyResult {
-    key: {
+    key?: {
         complexNumber?: number | null;
         pyeongTypeNumber?: number | null;
         buildingNumber?: number | null;
@@ -126,22 +126,22 @@ interface ArticleKeyResult {
         redevelopmentAreaNumber?: number | null;
         pnu?: number | null;
     };
-    type: {
+    type?: {
         realEstateType: RealEstateTypeCode;
         tradeType: TradeType;
     };
-    address: {
+    address?: {
         legalDivisionNumber?: string;
         jibun?: string;
         li?: null;
     };
-    isRealEstateAssociationArticle: boolean;
-    isArticleImageExist: boolean;
+    isRealEstateAssociationArticle?: boolean;
+    isArticleImageExist?: boolean;
 }
 
 interface ComplexResult {
     name: string;
-    type: 'A02';
+    type: RealEstateTypeCode;
     address: {
         legalDivisionNumber: string;
         legalDivisionLevel: string;
