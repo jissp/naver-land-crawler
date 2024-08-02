@@ -27,8 +27,11 @@ type SubCrawlingConditionEntry = [
 export class Schedule {
     constructor(private readonly crawlerQueueService: CrawlerQueueService) {}
 
-    // @Cron('0 0 */2 * * *')
-    @Cron('*/5 * * * * *')
+    async onModuleInit() {
+        await this.crawlingNaverLandArticles();
+    }
+
+    @Cron('0 0 */2 * * *')
     @RunOnce()
     public async crawlingNaverLandArticles() {
         for (const [
