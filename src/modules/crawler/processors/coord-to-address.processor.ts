@@ -20,7 +20,7 @@ export class CoordToAddressProcessor {
     async onProcess(job: Job<JobData>) {
         const { articleNo, latitude, longitude } = job.data;
 
-        const address = await this.coord2addressServce.collectCoordToAddress({
+        const address = await this.coord2addressServce.findByCoordWithCollect({
             lat: latitude,
             lng: longitude,
         });
