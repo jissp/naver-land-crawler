@@ -98,7 +98,7 @@ export class CrawlingArticleProcessor {
                 await this.crawlerQueueService.addArticleTransformJob(article);
             }
 
-            if (articles.length <= 20) {
+            if (articles.length < 20) {
                 break;
             }
 
