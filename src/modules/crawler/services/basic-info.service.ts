@@ -1,13 +1,13 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BasicInfoEntity } from '@modules/crawler/entities';
 import {
     FrontApiOperationId,
     FrontApiResult,
     RealEstateTypeCode,
     TradeType,
 } from '@modules/naver-land-client';
+import { BasicInfoEntity } from '../entities';
 
 @Injectable()
 export class BasicInfoService {

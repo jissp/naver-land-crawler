@@ -1,7 +1,7 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ArticleEntity } from '@modules/article/article.entity';
-import { Repository } from 'typeorm';
+import { ArticleEntity } from './article.entity';
 
 @Injectable()
 export class ArticleService {
@@ -27,9 +27,7 @@ export class ArticleService {
     public async create(
         article: Omit<ArticleEntity, 'id' | 'createdAt' | 'updatedAt'>,
     ) {
-        return this.articleEntity.save<ArticleEntity>(article, {
-            reload: true,
-        });
+        return this.articleEntity.save<ArticleEntity>(article);
     }
 
     /**
@@ -45,9 +43,7 @@ export class ArticleService {
 
         Object.assign(existingArticle, article);
 
-        return this.articleEntity.save<ArticleEntity>(existingArticle, {
-            reload: true,
-        });
+        return this.articleEntity.save<ArticleEntity>(existingArticle);
     }
 
     /**

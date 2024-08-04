@@ -1,12 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import {
-    ArticleKeyEntity,
-    BasicInfoEntity,
-    ComplexEntity,
-} from '@modules/crawler/entities';
+import { ArticleKeyEntity, BasicInfoEntity, ComplexEntity } from './entities';
 import { NaverLandClientModule } from '@modules/naver-land-client';
 import { CrawlerQueueModule } from '@modules/crawler-queue';
+import { ArticleModule } from '@modules/article';
+import { Coord2addressModule } from '@modules/coord2address';
 import {
     ArticleKeyService,
     BasicInfoService,
@@ -17,8 +15,6 @@ import {
     CoordToAddressProcessor,
     CrawlingArticleProcessor,
 } from './processors';
-import { ArticleModule } from '@modules/article';
-import { Coord2addressModule } from '@modules/coord2address';
 
 const entities = [ArticleKeyEntity, BasicInfoEntity, ComplexEntity];
 const services = [ArticleKeyService, BasicInfoService, ComplexService];

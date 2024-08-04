@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ComplexEntity } from '@modules/crawler/entities';
+import { ComplexEntity } from '../entities';
 import {
     FrontApiOperationId,
     FrontApiResult,

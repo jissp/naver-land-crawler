@@ -1,7 +1,7 @@
 import { Job } from 'bull';
 import { OnQueueFailed, Process, Processor } from '@nestjs/bull';
-import { NaverLandQueue, NaverLandQueueJobData } from '@modules/crawler-queue';
 import { Coord2addressService } from '@modules/coord2address';
+import { NaverLandQueue, NaverLandQueueJobData } from '@modules/crawler-queue';
 import { ArticleService } from '@modules/article';
 
 type JobData = NaverLandQueueJobData<NaverLandQueue.CoordinateToAddress>;

@@ -5,13 +5,13 @@ import {
     NaverLandQueue,
     NaverLandQueueJobData,
 } from '@modules/crawler-queue';
+import { ArticleService } from '@modules/article';
 import {
     ArticleKeyService,
     ArticleTransformer,
     BasicInfoService,
     ComplexService,
-} from '@modules/crawler';
-import { ArticleService } from '@modules/article';
+} from '../';
 
 type JobData = NaverLandQueueJobData<NaverLandQueue.ArticleTransform>;
 

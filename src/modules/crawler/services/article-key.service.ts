@@ -1,11 +1,12 @@
 import { Repository } from 'typeorm';
+import { SaveOptions } from 'typeorm/repository/SaveOptions';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ArticleKeyEntity } from '@modules/crawler/entities';
 import {
     FrontApiOperationId,
     FrontApiResult,
 } from '@modules/naver-land-client';
+import { ArticleKeyEntity } from '../entities';
 
 @Injectable()
 export class ArticleKeyService {
@@ -18,17 +19,19 @@ export class ArticleKeyService {
      * Article Key 정보를 생성한다.
      * @param articleId
      * @param data
+     * @param options
      */
     public async create(
         articleId: string,
         data: FrontApiResult<FrontApiOperationId.ArticleKey>,
+        options?: SaveOptions,
     ) {
         const articleKey = this.articleKeyRepository.create({
             articleId,
             data,
         });
 
-        return this.articleKeyRepository.save(articleKey);
+        return this.articleKeyRepository.save(articleKey, options);
     }
 
     /**
