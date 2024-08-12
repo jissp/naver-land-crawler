@@ -15,6 +15,10 @@ export class KakaoGeoClient {
         });
     }
 
+    private isBindKakaoApiKey() {
+        return !!this.client.defaults.headers['Authorization'];
+    }
+
     /**
      * 지정 경도/위도의 주소 정보를 조회한다.
      * @param long
@@ -27,6 +31,10 @@ export class KakaoGeoClient {
         long: number;
         lat: number;
     }): Promise<IGetAddressByCoord2Response> {
+        if (!this.isBindKakaoApiKey()) {
+            throw new Error('Authorization header is missing');
+        }
+
         const response = await this.client.get(
             '/v2/local/geo/coord2address.JSON',
             {
