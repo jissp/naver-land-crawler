@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Nullable } from '@modules/common/types';
 import { KakaoGeoClient } from '@modules/kakao-client/geo';
 import { KakaoGeoAddressEntity } from './kakao-geo-address.entity';
 import { Coordinate } from './coord2address.interface';
@@ -18,7 +19,7 @@ export class Coord2addressService {
      */
     public async findByCoord(
         coordinate: Coordinate,
-    ): Promise<KakaoGeoAddressEntity | null> {
+    ): Promise<Nullable<KakaoGeoAddressEntity>> {
         return await this.kakaoGeoAddressRepository.findOneBy({
             latitude: coordinate.lat,
             longitude: coordinate.lng,
@@ -30,7 +31,7 @@ export class Coord2addressService {
      */
     public async findByCoordWithCollect(
         coordinate: Coordinate,
-    ): Promise<KakaoGeoAddressEntity | null> {
+    ): Promise<Nullable<KakaoGeoAddressEntity>> {
         const kakaoGeoAddress = await this.findByCoord(coordinate);
         if (kakaoGeoAddress) {
             return kakaoGeoAddress;

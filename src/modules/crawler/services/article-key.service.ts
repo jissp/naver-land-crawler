@@ -2,6 +2,7 @@ import { Repository } from 'typeorm';
 import { SaveOptions } from 'typeorm/repository/SaveOptions';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Nullable } from '@modules/common/types';
 import {
     FrontApiOperationId,
     FrontApiResult,
@@ -50,7 +51,7 @@ export class ArticleKeyService {
      */
     public async findByArticleId(
         articleId: string,
-    ): Promise<ArticleKeyEntity | null> {
+    ): Promise<Nullable<ArticleKeyEntity>> {
         return this.articleKeyRepository.findOneBy({
             articleId,
         });

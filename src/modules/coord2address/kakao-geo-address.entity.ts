@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { Nullable } from '@modules/common/types';
 import { IDocument } from '@modules/kakao-client/geo';
 
 @Entity({
@@ -44,5 +45,5 @@ export class KakaoGeoAddressEntity {
         default: null,
         onUpdate: 'CURRENT_TIMESTAMP',
     })
-    updatedAt?: Date | null;
+    updatedAt?: Nullable<Date>;
 }

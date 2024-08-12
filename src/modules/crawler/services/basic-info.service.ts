@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Nullable } from '@modules/common/types';
 import {
     FrontApiOperationId,
     FrontApiResult,
@@ -67,7 +68,7 @@ export class BasicInfoService {
         articleId: string,
         realEstateType: RealEstateTypeCode,
         tradeType: TradeType,
-    ): Promise<BasicInfoEntity | null> {
+    ): Promise<Nullable<BasicInfoEntity>> {
         return this.basicInfoRepository.findOneBy({
             articleId,
             realEstateType,

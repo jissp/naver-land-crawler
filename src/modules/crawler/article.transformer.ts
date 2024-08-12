@@ -7,6 +7,7 @@ import {
     RoomTag,
     TradeType,
 } from '@modules/naver-land-client';
+import { Nullable } from '@modules/common/types';
 import { ArticleEntity } from '@modules/article/article.entity';
 import { numberRange, NumberRangeOption } from '@modules/utils';
 
@@ -246,8 +247,8 @@ export class ArticleTransformer {
      * @private
      */
     private extractFloor(): {
-        floor: number | null;
-        maxFloor: number | null;
+        floor: Nullable<number>;
+        maxFloor: Nullable<number>;
     } {
         if (!this.article.flrInfo) {
             return {

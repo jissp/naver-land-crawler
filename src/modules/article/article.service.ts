@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Nullable } from '@modules/common/types';
 import { ArticleEntity } from './article.entity';
 
 @Injectable()
@@ -15,7 +16,7 @@ export class ArticleService {
      */
     public async findByArticleNo(
         articleNo: string,
-    ): Promise<ArticleEntity | null> {
+    ): Promise<Nullable<ArticleEntity>> {
         return this.articleEntity.findOneBy({
             articleNo,
         });

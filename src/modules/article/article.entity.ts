@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { Nullable } from '@modules/common/types';
 import { RealEstateTypeName, TradeType } from '@modules/naver-land-client';
 
 @Entity({
@@ -42,25 +43,25 @@ export class ArticleEntity {
         type: 'varchar',
         length: 20,
     })
-    region1?: string | null;
+    region1?: Nullable<string>;
 
     @Column({
         type: 'varchar',
         length: 20,
     })
-    region2?: string | null;
+    region2?: Nullable<string>;
 
     @Column({
         type: 'varchar',
         length: 20,
     })
-    region3?: string | null;
+    region3?: Nullable<string>;
 
     @Column({
         type: 'varchar',
         length: 500,
     })
-    address?: string | null;
+    address?: Nullable<string>;
 
     @Column({
         type: 'integer',
@@ -73,14 +74,14 @@ export class ArticleEntity {
         unsigned: true,
         nullable: true,
     })
-    rentPrice?: number | null;
+    rentPrice?: Nullable<number>;
 
     @Column({
         type: 'integer',
         unsigned: true,
         nullable: true,
     })
-    totalRentPrice?: number | null;
+    totalRentPrice?: Nullable<number>;
 
     @Column({
         type: 'decimal',
@@ -144,13 +145,13 @@ export class ArticleEntity {
         type: 'tinyint',
         unsigned: true,
     })
-    floor?: number | null;
+    floor?: Nullable<number>;
 
     @Column({
         type: 'tinyint',
         unsigned: true,
     })
-    maxFloor?: number | null;
+    maxFloor?: Nullable<number>;
 
     @Column({
         type: 'varchar',
@@ -203,13 +204,13 @@ export class ArticleEntity {
         type: 'text',
         nullable: true,
     })
-    summary?: string | null;
+    summary?: Nullable<string>;
 
     @Column({
         type: 'text',
         nullable: true,
     })
-    description?: string | null;
+    description?: Nullable<string>;
 
     @CreateDateColumn({
         type: 'timestamp',
@@ -222,5 +223,5 @@ export class ArticleEntity {
         default: null,
         onUpdate: 'CURRENT_TIMESTAMP',
     })
-    updatedAt?: Date | null;
+    updatedAt?: Nullable<Date>;
 }

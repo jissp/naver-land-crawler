@@ -1,3 +1,4 @@
+import { Nullable } from '@modules/common/types';
 import {
     BuildingConjunctionDateType,
     BuildingType,
@@ -119,12 +120,12 @@ interface ArticleBasicInfoResult {
 
 interface ArticleKeyResult {
     key?: {
-        complexNumber?: number | null;
-        pyeongTypeNumber?: number | null;
-        buildingNumber?: number | null;
-        hoNumber?: number | null;
-        redevelopmentAreaNumber?: number | null;
-        pnu?: number | null;
+        complexNumber?: Nullable<number>;
+        pyeongTypeNumber?: Nullable<number>;
+        buildingNumber?: Nullable<number>;
+        hoNumber?: Nullable<number>;
+        redevelopmentAreaNumber?: Nullable<number>;
+        pnu?: Nullable<number>;
     };
     type?: {
         realEstateType: RealEstateTypeCode;
