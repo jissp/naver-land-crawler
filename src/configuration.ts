@@ -1,14 +1,18 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { RedisOptions } from 'ioredis';
+import { Nullable } from '@modules/common/types';
 
-interface Configuration {
+export interface IConfiguration {
     database: TypeOrmModuleOptions;
     redis: RedisOptions;
-    kakao_rest_api_key: string;
+    kakao_rest_api_key: Nullable<string>;
+    slack: {
+        oAuthToken: Nullable<string>;
+    };
 }
 
-export default (): Configuration => ({
+export default (): IConfiguration => ({
     database: {
         type: 'mysql',
         host: process.env['database_host'] ?? 'mysql',
@@ -28,5 +32,8 @@ export default (): Configuration => ({
         host: process.env['redis_host'] ?? 'redis',
         port: Number(process.env['redis_port'] ?? 6379),
     },
-    kakao_rest_api_key: process.env['kakao_rest_api_key'],
+    kakao_rest_api_key: process.env['kakao_rest_api_key'] ?? null,
+    slack: {
+        oAuthToken: process.env['slack_oauth_token'] ?? null,
+    },
 });
