@@ -22,6 +22,8 @@ import {
     BasicInfoEntity,
     BasicInfoService,
     ComplexEntity,
+    ComplexEvStationEntity,
+    ComplexEvStationService,
     ComplexService,
 } from '../';
 
@@ -40,6 +42,7 @@ export class CrawlingArticleProcessor {
         private readonly articleKeyService: ArticleKeyService,
         private readonly basicInfoService: BasicInfoService,
         private readonly complexService: ComplexService,
+        private readonly complexEvStationService: ComplexEvStationService,
     ) {}
 
     private readonly defaultAreaCoordinates: Pick<
@@ -134,6 +137,15 @@ export class CrawlingArticleProcessor {
             if (complex) {
                 await uSleep(200);
             }
+
+            const complexEvStation = await this.collectComplexEvStation(
+                articleKey.data.key.complexNumber,
+            );
+
+            // 수집이 이루어졌다면 200ms 휴식
+            if (complexEvStation) {
+                await uSleep(200);
+            }
         }
     }
 
@@ -208,6 +220,31 @@ export class CrawlingArticleProcessor {
             await this.naverLandFrontClient.getComplex(complexNumber);
 
         return this.complexService.create(complexNumber, response.result);
+    }
+
+    /**
+     * @param complexNumber
+     * @private
+     */
+    private async collectComplexEvStation(
+        complexNumber: number,
+    ): Promise<ComplexEvStationEntity | void> {
+        const isExistComplex =
+            await this.complexEvStationService.existByComplexNumber(
+                complexNumber,
+            );
+
+        if (isExistComplex) {
+            return;
+        }
+
+        const response =
+            await this.naverLandFrontClient.getComplexEvStation(complexNumber);
+
+        return this.complexEvStationService.create(
+            complexNumber,
+            response.result,
+        );
     }
 
     @OnQueueCompleted()

@@ -23,22 +23,23 @@ create table articles
     region2                 varchar(20)                                                                                                                                              null,
     region3                 varchar(20)                                                                                                                                              null,
     address                 varchar(500)                                                                                                                                             null,
-    price                   int unsigned     default '0'                                                                                                                             null,
+    price                   int unsigned     default 0                                                                                                                             null,
     rent_price              int unsigned                                                                                                                                             null,
     total_rent_price        int unsigned                                                                                                                                             null comment '보증금 변환 월세',
     spc1                    decimal(8, 2)    default 0.00                                                                                                                            null,
     spc2                    decimal(8, 2)    default 0.00                                                                                                                            null,
     spc_ratio               decimal(5, 2)    default 0.00                                                                                                                            not null,
     spc_price               decimal(8, 2)    default 0.00                                                                                                                            null,
-    room_count              tinyint unsigned default '0'                                                                                                                             null,
-    household               int unsigned     default '0'                                                                                                                             not null,
+    room_count              tinyint unsigned default 0                                                                                                                             null,
+    household               int unsigned     default 0                                                                                                                             not null,
+    ev_station_count        int unsigned     default 0                                                                                                                                        not null comment '전기차 충전 시설 갯수',
     parking_count           int              default 0                                                                                                                               not null,
     parking_ratio           decimal(8, 2)    default 0.00                                                                                                                            not null,
     is_duplex               enum ('Y', 'N')  default 'N'                                                                                                                             not null,
-    floor                   tinyint unsigned default '0'                                                                                                                             null,
-    max_floor               int unsigned     default '0'                                                                                                                             null,
+    floor                   tinyint unsigned default 0                                                                                                                             null,
+    max_floor               int unsigned     default 0                                                                                                                             null,
     direction               enum ('동향', '서향', '남향', '북향', '북동향', '남동향', '북서향', '남서향')                                                                                                null,
-    completion_year         tinyint unsigned default '0'                                                                                                                             null,
+    completion_year         tinyint unsigned default 0                                                                                                                             null,
     building_coverage_ratio decimal(8, 2) unsigned                                                                                                                                   null,
     floor_area_ratio        decimal(8, 2) unsigned                                                                                                                                   null,
     summary                 text                                                                                                                                                     null comment 'Article Summary',
@@ -83,6 +84,19 @@ create table basic_infos
 
 create index basic_infos_article_id_index
     on basic_infos (article_id, real_estate_type, trade_type);
+
+create table complex_ev_stations
+(
+    id             bigint unsigned auto_increment
+        primary key,
+    complex_number varchar(15)                        not null,
+    data           json                               null,
+    created_at     datetime default CURRENT_TIMESTAMP not null,
+    updated_at     datetime                           null on update CURRENT_TIMESTAMP
+);
+
+create index complex_ev_stations_article_id_index
+    on complex_ev_stations (complex_number);
 
 create table complexes
 (

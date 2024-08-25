@@ -142,6 +142,12 @@ export class ArticleEntity {
     household?: number;
 
     @Column({
+        type: 'integer',
+        unsigned: true,
+    })
+    evStationCount?: number;
+
+    @Column({
         type: 'tinyint',
         unsigned: true,
     })
