@@ -10,6 +10,7 @@ import {
     ArticleKeyService,
     ArticleTransformer,
     BasicInfoService,
+    ComplexEvStationService,
     ComplexService,
 } from '../';
 
@@ -25,6 +26,7 @@ export class ArticleTransformProcessor {
         private readonly articleKeyService: ArticleKeyService,
         private readonly basicInfoService: BasicInfoService,
         private readonly complexService: ComplexService,
+        private readonly complexEvStationService: ComplexEvStationService,
         private readonly articleService: ArticleService,
     ) {}
 
@@ -43,11 +45,15 @@ export class ArticleTransformProcessor {
         const complex = await this.findComplex(
             articleKey.data.key.complexNumber,
         );
+        const complexEvStation = await this.findComplexEvStation(
+            articleKey.data.key.complexNumber,
+        );
 
         const transformer = new ArticleTransformer(
             article,
             basicInfo.data,
             complex?.data,
+            complexEvStation?.data,
         );
         const transformedArticle = transformer.transform();
 
@@ -80,5 +86,13 @@ export class ArticleTransformProcessor {
         }
 
         return this.complexService.findByComplexNumber(complexNumber);
+    }
+
+    private findComplexEvStation(complexNumber?: number) {
+        if (!complexNumber) {
+            return null;
+        }
+
+        return this.complexEvStationService.findByComplexNumber(complexNumber);
     }
 }

@@ -187,6 +187,7 @@ interface ComplexResult {
 
 interface ComplexEvStationListResult {
     list: ComplexEvStationResult[];
+    count: number;
 }
 
 interface ComplexEvStationResult {

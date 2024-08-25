@@ -16,6 +16,7 @@ export class ArticleTransformer {
         private readonly article: ArticleItem,
         private readonly basicInfo: FrontApiResult<FrontApiOperationId.ArticleBasicInfo>,
         private readonly complex?: FrontApiResult<FrontApiOperationId.Complex>,
+        private readonly complexEvStation?: FrontApiResult<FrontApiOperationId.ComplexEvStation>,
     ) {}
 
     /**
@@ -29,6 +30,7 @@ export class ArticleTransformer {
         this.buildArticlePrice(article);
         this.buildArticleBuilding(article);
         this.buildArticleParkingInfo(article);
+        this.buildArticleEvStationInfo(article);
         this.buildArticleTags(article);
 
         this.correctNumberFieldRange(article);
@@ -163,6 +165,15 @@ export class ArticleTransformer {
         if (article.parkingRatio === 0 && article.household !== 0) {
             article.parkingRatio = article.parkingCount / article.household;
         }
+    }
+
+    /**
+     * 단지 내 전기차 충전 시설 정보를 변환한다.
+     * @param article
+     * @private
+     */
+    private buildArticleEvStationInfo(article: ArticleEntity) {
+        article.evStationCount = this.complexEvStation?.count ?? 0;
     }
 
     /**
