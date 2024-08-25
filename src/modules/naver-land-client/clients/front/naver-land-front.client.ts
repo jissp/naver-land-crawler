@@ -72,4 +72,22 @@ export class NaverLandFrontClient extends NaverLandClientAbstract {
             },
         });
     }
+
+    /**
+     * 단지의 전기차 충전 시설 정보를 조회합니다.
+     * @param complexNumber
+     */
+    public async getComplexEvStation(
+        complexNumber: number | string,
+    ): Promise<FrontApiResponseDto<FrontApiOperationId.ComplexEvStation>> {
+        return this.call<
+            FrontApiResponseDto<FrontApiOperationId.ComplexEvStation>
+        >({
+            method: 'GET',
+            path: '/front-api/v1/complex/evStaion', // 네이버에서 오타낸듯ㅎ;
+            queryParams: {
+                complexNumber,
+            },
+        });
+    }
 }

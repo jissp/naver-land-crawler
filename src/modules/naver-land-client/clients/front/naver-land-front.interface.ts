@@ -20,6 +20,7 @@ export enum FrontApiOperationId {
     ArticleKey = 'ArticleKey',
     ArticleBasicInfo = 'ArticleBasicInfo',
     Complex = 'Complex',
+    ComplexEvStation = 'ComplexEvStation',
 }
 
 export type FrontApiResult<T extends FrontApiOperationId> =
@@ -29,7 +30,9 @@ export type FrontApiResult<T extends FrontApiOperationId> =
           ? ArticleBasicInfoResult
           : T extends FrontApiOperationId.Complex
             ? ComplexResult
-            : never;
+            : T extends FrontApiOperationId.ComplexEvStation
+              ? ComplexEvStationListResult
+              : never;
 
 interface ArticleBasicInfoResult {
     priceInfo?: {
@@ -180,4 +183,45 @@ interface ComplexResult {
     managementOfficeContact?: null;
     monopolyRestrictionType: 'N';
     isRestrictedTransferOfReconstructionAssociationMembership: boolean;
+}
+
+interface ComplexEvStationListResult {
+    list: ComplexEvStationResult[];
+}
+
+interface ComplexEvStationResult {
+    provider: string;
+    chargerType: ComplexEvStationChargerType;
+    chargingSpeedType: ComplexEvStationChargingSpeedType;
+    installationType?: string;
+    groundLevelType?: string;
+    numberOfInstallations: number;
+}
+
+////
+
+export enum ComplexEvStationChargerType {
+    'AC단상5핀' = '01',
+    'AC3상7핀' = '02',
+    'DC차데모10핀' = '03',
+    'DC콤보7핀' = '04',
+    '직접입력' = '05',
+}
+
+export enum ComplexEvStationChargingSpeedType {
+    '초급속' = '01',
+    '급속' = '02',
+    '완속' = '03',
+}
+
+// TODO 아직 네이버에서 정리된 인터페이스가 없는 듯 함.
+export enum ComplexEvStationInstallationType {
+    '01' = '01',
+    '02' = '02',
+}
+
+// TODO 아직 네이버에서 정리된 인터페이스가 없는 듯 함.
+export enum ComplexEvStationGroundLevelType {
+    '01' = '01',
+    '02' = '02',
 }

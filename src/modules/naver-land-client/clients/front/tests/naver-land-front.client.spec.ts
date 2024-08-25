@@ -42,4 +42,11 @@ describe('NaverLandFrontClient', () => {
         expect(response.isSuccess).toBeDefined();
         expect(response.result).toBeDefined();
     });
+
+    it('getComplexEvStation', async () => {
+        const response = await naverLandFrontClient.getComplexEvStation('3210');
+
+        expect(response.isSuccess).toBeDefined();
+        expect(response.result).toBeDefined();
+    });
 });
