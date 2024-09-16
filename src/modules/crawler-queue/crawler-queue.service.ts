@@ -32,7 +32,7 @@ export class CrawlerQueueService extends AbstractQueueService {
      * 네이버 부동산 매물 수집 Job을 Queue에 추가한다.
      * @param data
      */
-    public async addCrawlingArticlesJob(
+    public async addCrawlingArticleJob(
         data: NaverLandQueueJobData<NaverLandQueue.CrawlingArticles>,
     ) {
         return this._addJob<
