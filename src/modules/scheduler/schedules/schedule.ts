@@ -127,8 +127,8 @@ export class Schedule {
                         this.crawlerQueueService.addCrawlingArticleJob({
                             ...articleListRequestDto,
                             cortarNo,
-                            rletTpCd: realEstateTypeCode,
-                            tradTpCd: tradeType,
+                            rletTpCd: [realEstateTypeCode],
+                            tradTpCd: [tradeType],
                         }),
                 );
             },
