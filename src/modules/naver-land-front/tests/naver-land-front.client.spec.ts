@@ -1,17 +1,16 @@
 import { Test } from '@nestjs/testing';
-import { NaverLandClientModule } from '../../../naver-land-client.module';
-import { NaverLandFrontClient } from '../naver-land-front.client';
+import { RealEstateTypeCode, TradeType } from '@common/naver-land';
 import {
-    RealEstateTypeCode,
-    TradeType,
-} from '../../../naver-land-client.interface';
+    NaverLandFrontClient,
+    NaverLandFrontModule,
+} from '@modules/naver-land-front';
 
 describe('NaverLandFrontClient', () => {
     let naverLandFrontClient: NaverLandFrontClient;
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            imports: [NaverLandClientModule],
+            imports: [NaverLandFrontModule],
         }).compile();
 
         naverLandFrontClient =

@@ -2,11 +2,8 @@ import { Repository } from 'typeorm';
 import { SaveOptions } from 'typeorm/repository/SaveOptions';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Nullable } from '@modules/common/types';
-import {
-    FrontApiOperationId,
-    FrontApiResult,
-} from '@modules/naver-land-client';
+import { Nullable } from '@common/types';
+import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 import { ArticleKeyEntity } from '../entities';
 
 @Injectable()

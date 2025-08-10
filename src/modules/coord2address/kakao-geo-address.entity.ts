@@ -5,7 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Nullable } from '@modules/common/types';
+import { Nullable } from '@common/types';
 import { IDocument } from '@modules/kakao-client/geo';
 
 @Entity({

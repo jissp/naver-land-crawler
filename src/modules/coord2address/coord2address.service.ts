@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Nullable } from '@modules/common/types';
+import { Nullable } from '@common/types';
 import { KakaoGeoClient } from '@modules/kakao-client/geo';
 import { KakaoGeoAddressEntity } from './kakao-geo-address.entity';
 import { Coordinate } from './coord2address.interface';

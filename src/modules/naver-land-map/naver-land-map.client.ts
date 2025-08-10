@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { NaverLandClientAbstract } from '@common/naver-land';
 import { GetRegionListResponseDto } from './dtos';
-import { NaverLandClientAbstract } from '../naver-land.client.abstract';
 
 @Injectable()
 export class NaverLandMapClient extends NaverLandClientAbstract {

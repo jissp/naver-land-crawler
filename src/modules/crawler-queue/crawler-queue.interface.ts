@@ -1,4 +1,7 @@
-import { ArticleItem, ArticleListRequestDto } from '@modules/naver-land-client';
+import {
+    ArticleItem,
+    ArticleListRequestDto,
+} from '@modules/naver-land-cluster';
 
 export enum NaverLandQueue {
     CrawlingArticles = 'CrawlingArticles',

@@ -1,13 +1,17 @@
 import { Test } from '@nestjs/testing';
-import { NaverLandClientModule } from '../../../naver-land-client.module';
-import { NaverLandClusterClient } from '../naver-land-cluster.client';
+import {
+    NaverLandClusterClient,
+    NaverLandClusterModule,
+    SearchRealEstateTypeCode,
+} from '@modules/naver-land-cluster';
+import { TradeType } from '@common/naver-land';
 
 describe('NaverLandClusterClient', () => {
     let naverLandClusterClient: NaverLandClusterClient;
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            imports: [NaverLandClientModule],
+            imports: [NaverLandClusterModule],
         }).compile();
 
         naverLandClusterClient = module.get<NaverLandClusterClient>(
@@ -17,8 +21,11 @@ describe('NaverLandClusterClient', () => {
 
     it('getArticleList', async () => {
         const articles = await naverLandClusterClient.getArticleList({
-            rletTpCd: 'APT:OPST',
-            tradTpCd: 'A1:B2',
+            rletTpCd: [
+                SearchRealEstateTypeCode.아파트,
+                SearchRealEstateTypeCode.오피스텔,
+            ],
+            tradTpCd: [TradeType.매매, TradeType.월세],
             z: 19,
             lat: 37.5236987,
             lon: 126.8992539,
@@ -30,6 +37,7 @@ describe('NaverLandClusterClient', () => {
             spcMax: 900000000,
             dprcMax: 40000,
             wprcMax: 10000,
+            page: 1,
         });
 
         expect(articles.code).toBe('success');

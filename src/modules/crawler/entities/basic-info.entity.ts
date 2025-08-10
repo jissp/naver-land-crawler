@@ -5,12 +5,8 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import {
-    FrontApiOperationId,
-    FrontApiResult,
-    RealEstateTypeCode,
-    TradeType,
-} from '@modules/naver-land-client';
+import { RealEstateTypeCode, TradeType } from '@common/naver-land';
+import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 
 @Entity({
     name: 'basic_infos',

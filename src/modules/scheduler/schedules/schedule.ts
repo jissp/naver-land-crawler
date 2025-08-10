@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { TradeType } from '@common/naver-land';
+import {
+    ArticleListRequestDto,
+    SearchRealEstateTypeCode,
+} from '@modules/naver-land-cluster';
 import {
     ArticleConditionsGroupedByRealEstateType,
     ArticleConditionsGroupedByTradeType,
@@ -8,11 +13,6 @@ import {
     DefaultCrawlingConditions,
     RunOnce,
 } from '@modules/scheduler';
-import {
-    ArticleListRequestDto,
-    SearchRealEstateTypeCode,
-    TradeType,
-} from '@modules/naver-land-client';
 import { CrawlerQueueService } from '@modules/crawler-queue';
 
 type CrawlingConditionEntry = [

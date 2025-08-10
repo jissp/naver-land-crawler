@@ -1,11 +1,8 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 import { ComplexEntity } from '../entities';
-import {
-    FrontApiOperationId,
-    FrontApiResult,
-} from '@modules/naver-land-client';
 
 @Injectable()
 export class ComplexService {

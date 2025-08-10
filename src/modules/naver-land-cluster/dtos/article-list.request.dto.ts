@@ -1,7 +1,5 @@
-import {
-    SearchRealEstateTypeCode,
-    TradeType,
-} from '@modules/naver-land-client';
+import { TradeType } from '@common/naver-land';
+import { SearchRealEstateTypeCode } from '../naver-land-cluster.interface';
 
 export class ArticleListRequestDto {
     z!: number;
@@ -12,8 +10,8 @@ export class ArticleListRequestDto {
     top!: number;
     rgt!: number;
     cortarNo?: string; // 법정동코드
-    rletTpCd?: SearchRealEstateTypeCode;
-    tradTpCd?: TradeType;
+    rletTpCd?: SearchRealEstateTypeCode[];
+    tradTpCd?: TradeType[];
     spcMin?: number; // 면적(최소)
     spcMax?: number; // 면적(최대)
     dprcMin?: number; // 매매가(최소)

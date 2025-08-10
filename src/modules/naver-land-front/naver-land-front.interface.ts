@@ -1,4 +1,4 @@
-import { Nullable } from '@modules/common/types';
+import { Nullable } from '@common/types';
 import {
     BuildingConjunctionDateType,
     BuildingType,
@@ -14,7 +14,7 @@ import {
     ResidenceType,
     TradeType,
     VerificationType,
-} from '../../naver-land-client.interface';
+} from '@common/naver-land';
 
 export enum FrontApiOperationId {
     ArticleKey = 'ArticleKey',
