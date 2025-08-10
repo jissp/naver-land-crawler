@@ -5,15 +5,15 @@ import {
     ArticleListRequestDto,
     SearchRealEstateTypeCode,
 } from '@modules/naver-land-cluster';
+import { CrawlerQueueService } from '@modules/crawler-queue';
+import { PreventConcurrentExecution } from './decorators';
 import {
     ArticleConditionsGroupedByRealEstateType,
     ArticleConditionsGroupedByTradeType,
     CortarNo,
     CustomCrawlingConditions,
     DefaultCrawlingConditions,
-    RunOnce,
-} from '@modules/scheduler';
-import { CrawlerQueueService } from '@modules/crawler-queue';
+} from './interfaces';
 
 type CrawlingConditionEntry = [
     realEstateTypeCode: SearchRealEstateTypeCode,
@@ -26,7 +26,7 @@ type SubCrawlingConditionEntry = [
 ];
 
 @Injectable()
-export class Schedule {
+export class NaverLandCrawlingScheduler {
     private readonly cortarNoList = [
         CortarNo.서울시구로구,
         CortarNo.서울시영등포구,
@@ -57,7 +57,7 @@ export class Schedule {
     }
 
     @Cron('0 0 */3 * * *')
-    @RunOnce()
+    @PreventConcurrentExecution()
     public async crawlingNaverLandArticles() {
         // 일반 매물 수집
         await Promise.all(

@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import configuration from './configuration';
 import { QueueModule } from '@modules/queue';
-import { SchedulerModule } from '@modules/scheduler';
 import { CrawlerModule } from '@modules/crawler';
+import { NaverLandCrawlingSchedulerModule } from '@modules/naver-land-crawling-scheduler';
+import configuration from './configuration';
 
 @Module({
     imports: [
@@ -21,7 +21,7 @@ import { CrawlerModule } from '@modules/crawler';
         }),
         QueueModule.forRoot(),
         ScheduleModule.forRoot(),
-        SchedulerModule,
+        NaverLandCrawlingSchedulerModule,
         CrawlerModule,
     ],
     controllers: [],

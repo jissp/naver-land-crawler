@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CrawlerQueueModule } from '@modules/crawler-queue/crawler-queue.module';
-import { Schedule } from './schedules';
+import { NaverLandCrawlingScheduler } from './naver-land-crawling.scheduler';
 
 @Module({
     imports: [CrawlerQueueModule],
-    providers: [Schedule],
+    providers: [NaverLandCrawlingScheduler],
 })
-export class SchedulerModule {}
+export class NaverLandCrawlingSchedulerModule {}
