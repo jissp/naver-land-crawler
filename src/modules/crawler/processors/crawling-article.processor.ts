@@ -6,12 +6,12 @@ import {
     Processor,
 } from '@nestjs/bull';
 import { uSleep } from '@modules/utils';
+import { NaverLandFrontClient } from '@modules/naver-land-front';
 import {
     ArticleItem,
     ArticleListRequestDto,
     NaverLandClusterClient,
-    NaverLandFrontClient,
-} from '@modules/naver-land-client';
+} from '@modules/naver-land-cluster';
 import {
     CrawlerQueueService,
     NaverLandQueue,

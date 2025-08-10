@@ -1,4 +1,4 @@
-import { RealEstateTypeCode, TradeType } from '@modules/naver-land-client';
+import { RealEstateTypeCode, TradeType } from '@common/naver-land';
 
 export enum SearchRealEstateTypeCode {
     아파트 = 'APT',

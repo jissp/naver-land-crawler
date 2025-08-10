@@ -1,8 +1,8 @@
+import { TradeType } from '@common/naver-land';
 import {
     ArticleListRequestDto,
     SearchRealEstateTypeCode,
-    TradeType,
-} from '@modules/naver-land-client';
+} from '@modules/naver-land-cluster';
 
 export enum CortarNo {
     서울시구로구 = '1153000000',

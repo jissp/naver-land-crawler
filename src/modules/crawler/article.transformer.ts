@@ -1,15 +1,14 @@
+import { Nullable } from '@common/types';
+import { ArticleEntity } from '@modules/article/article.entity';
+import { numberRange, NumberRangeOption } from '@modules/utils';
+import { TradeType } from '@common/naver-land';
+import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 import {
     ArticleItem,
     CompletionYearTag,
     DuplexTag,
-    FrontApiOperationId,
-    FrontApiResult,
     RoomTag,
-    TradeType,
-} from '@modules/naver-land-client';
-import { Nullable } from '@modules/common/types';
-import { ArticleEntity } from '@modules/article/article.entity';
-import { numberRange, NumberRangeOption } from '@modules/utils';
+} from '@modules/naver-land-cluster';
 
 export class ArticleTransformer {
     constructor(

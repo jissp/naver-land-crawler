@@ -5,10 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import {
-    FrontApiOperationId,
-    FrontApiResult,
-} from '@modules/naver-land-client';
+import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 
 @Entity({
     name: 'complexes',

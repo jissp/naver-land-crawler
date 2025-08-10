@@ -1,13 +1,15 @@
 import { Test } from '@nestjs/testing';
-import { NaverLandClientModule } from '../../../naver-land-client.module';
-import { NaverLandMapClient } from '../naver-land-map.client';
+import {
+    NaverLandMapClient,
+    NaverLandMapModule,
+} from '@modules/naver-land-map';
 
 describe('NaverLandMapClient', () => {
     let naverLandMapClient: NaverLandMapClient;
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            imports: [NaverLandClientModule],
+            imports: [NaverLandMapModule],
         }).compile();
 
         naverLandMapClient = module.get<NaverLandMapClient>(NaverLandMapClient);

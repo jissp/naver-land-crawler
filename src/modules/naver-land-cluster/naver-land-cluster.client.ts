@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { NaverLandClientAbstract } from '@common/naver-land';
 import { ArticleListRequestDto, ArticleListResponseDto } from './dtos';
-import { NaverLandClientAbstract } from '../naver-land.client.abstract';
 
 @Injectable()
 export class NaverLandClusterClient extends NaverLandClientAbstract {
@@ -20,6 +20,8 @@ export class NaverLandClusterClient extends NaverLandClientAbstract {
             path: '/cluster/ajax/articleList',
             queryParams: {
                 ...request,
+                rletTpCd: request.rletTpCd.join(':'),
+                tradTpCd: request.tradTpCd.join(':'),
             },
         });
     }

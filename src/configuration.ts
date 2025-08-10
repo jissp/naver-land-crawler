@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { RedisOptions } from 'ioredis';
-import { Nullable } from '@modules/common/types';
+import { Nullable } from '@common/types';
 
 export interface IConfiguration {
     database: TypeOrmModuleOptions;

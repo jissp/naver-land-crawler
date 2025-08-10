@@ -4,11 +4,11 @@
 
 ## 사용 API
 
-### [Naver 부동산 Cluster API](./src/modules/naver-land-client/clients/cluster/readme.md)
+### [Naver 부동산 Cluster API](./src/modules/naver-land-cluster/readme.md)
 
 네이버 부동산 매물 목록을 조회할 때 사용할 Cluster API
 
-### [Naver 부동산 Front API](./src/modules/naver-land-client/clients/front/readme.md)
+### [Naver 부동산 Front API](./src/modules/naver-land-front/readme.md)
 
 네이버 부동산 매물의 정보를 상세하게 조회할 수 있는 Front API
 

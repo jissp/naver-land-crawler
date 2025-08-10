@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+    NaverLandClientAbstract,
     RealEstateTypeCode,
     TradeType,
-} from '../../naver-land-client.interface';
-import { FrontApiResponseDto } from './dtos';
+} from '@common/naver-land';
 import { FrontApiOperationId } from './naver-land-front.interface';
-import { NaverLandClientAbstract } from '../naver-land.client.abstract';
+import { FrontApiResponseDto } from './dtos';
 
 @Injectable()
 export class NaverLandFrontClient extends NaverLandClientAbstract {

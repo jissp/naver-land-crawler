@@ -5,8 +5,9 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Nullable } from '@modules/common/types';
-import { RealEstateTypeName, TradeType } from '@modules/naver-land-client';
+import { Nullable } from '@common/types';
+import { TradeType } from '@common/naver-land';
+import { RealEstateTypeName } from '@modules/naver-land-cluster';
 
 @Entity({
     name: 'articles',
