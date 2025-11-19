@@ -2,6 +2,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    Index,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -15,6 +16,7 @@ export class BasicInfoEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Index()
     @Column({
         type: 'varchar',
         length: 15,

@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { QueueModule } from '@modules/queue';
-import { CrawlerModule } from '@modules/crawler';
+import { NaverLandCrawlerModule } from '@modules/naver-land-crawler';
 import { NaverLandCrawlingSchedulerModule } from '@modules/naver-land-crawling-scheduler';
 import configuration from './configuration';
 
@@ -22,7 +22,7 @@ import configuration from './configuration';
         QueueModule.forRoot(),
         ScheduleModule.forRoot(),
         NaverLandCrawlingSchedulerModule,
-        CrawlerModule,
+        NaverLandCrawlerModule,
     ],
     controllers: [],
     providers: [],

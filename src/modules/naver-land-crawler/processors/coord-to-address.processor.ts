@@ -1,8 +1,11 @@
 import { Job } from 'bull';
 import { OnQueueFailed, Process, Processor } from '@nestjs/bull';
 import { Coord2addressService } from '@modules/coord2address';
-import { NaverLandQueue, NaverLandQueueJobData } from '@modules/crawler-queue';
 import { ArticleService } from '@modules/article';
+import {
+    NaverLandQueue,
+    NaverLandQueueJobData,
+} from '../naver-land-crawler.interface';
 
 type JobData = NaverLandQueueJobData<NaverLandQueue.CoordinateToAddress>;
 
@@ -12,7 +15,7 @@ type JobData = NaverLandQueueJobData<NaverLandQueue.CoordinateToAddress>;
 @Processor(NaverLandQueue.CoordinateToAddress)
 export class CoordToAddressProcessor {
     constructor(
-        private readonly coord2addressServce: Coord2addressService,
+        private readonly coord2addressService: Coord2addressService,
         private readonly articleService: ArticleService,
     ) {}
 
@@ -20,7 +23,7 @@ export class CoordToAddressProcessor {
     async onProcess(job: Job<JobData>) {
         const { articleNo, latitude, longitude } = job.data;
 
-        const address = await this.coord2addressServce.findByCoordWithCollect({
+        const address = await this.coord2addressService.findByCoordWithCollect({
             lat: latitude,
             lng: longitude,
         });
@@ -32,11 +35,6 @@ export class CoordToAddressProcessor {
             region3: address.data.address.region_3depth_name,
         });
     }
-
-    // @OnQueueCompleted()
-    // async onCompleted(job: Job<JobData>, result: any) {
-    //     // console.log(`${NaverLandCrawlerQueueType.TransformArticle} completed`);
-    // }
 
     @OnQueueFailed()
     async onFailed(job: Job<JobData>, e: any) {

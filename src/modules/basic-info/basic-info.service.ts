@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Nullable } from '@common/types';
 import { RealEstateTypeCode, TradeType } from '@common/naver-land';
 import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
-import { BasicInfoEntity } from '../entities';
+import { BasicInfoEntity } from './index';
 
 @Injectable()
 export class BasicInfoService {
@@ -20,12 +20,12 @@ export class BasicInfoService {
      * @param tradeType
      * @param data
      */
-    public async create(
+    public async save(
         articleId: string,
         realEstateType: RealEstateTypeCode,
         tradeType: TradeType,
         data: FrontApiResult<FrontApiOperationId.ArticleBasicInfo>,
-    ) {
+    ): Promise<BasicInfoEntity> {
         const basicInfo = this.basicInfoRepository.create({
             articleId,
             realEstateType,

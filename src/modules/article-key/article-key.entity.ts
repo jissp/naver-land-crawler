@@ -2,6 +2,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    Index,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +15,7 @@ export class ArticleKeyEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Index()
     @Column({
         type: 'varchar',
         length: 15,

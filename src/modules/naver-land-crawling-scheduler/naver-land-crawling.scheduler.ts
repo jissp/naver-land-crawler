@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Queue } from 'bull';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
 import { Cron } from '@nestjs/schedule';
 import { TradeType } from '@common/naver-land';
 import {
     ArticleListRequestDto,
     SearchRealEstateTypeCode,
 } from '@modules/naver-land-cluster';
-import { CrawlerQueueService } from '@modules/crawler-queue';
+import {
+    NaverLandQueue,
+    NaverLandQueueJobData,
+} from '@modules/naver-land-crawler';
 import { PreventConcurrentExecution } from './decorators';
 import {
     ArticleConditionsGroupedByRealEstateType,
@@ -26,7 +31,7 @@ type SubCrawlingConditionEntry = [
 ];
 
 @Injectable()
-export class NaverLandCrawlingScheduler {
+export class NaverLandCrawlingScheduler implements OnModuleInit {
     private readonly cortarNoList = [
         CortarNo.서울시구로구,
         CortarNo.서울시영등포구,
@@ -50,7 +55,12 @@ export class NaverLandCrawlingScheduler {
         CortarNo.경기도과천시,
     ];
 
-    constructor(private readonly crawlerQueueService: CrawlerQueueService) {}
+    constructor(
+        @InjectQueue(NaverLandQueue.CrawlingArticles)
+        private readonly crawlingArticleQueue: Queue<
+            NaverLandQueueJobData<NaverLandQueue.CrawlingArticles>
+        >,
+    ) {}
 
     async onModuleInit() {
         await this.crawlingNaverLandArticles();
@@ -59,28 +69,26 @@ export class NaverLandCrawlingScheduler {
     @Cron('0 0 */3 * * *')
     @PreventConcurrentExecution()
     public async crawlingNaverLandArticles() {
-        // 일반 매물 수집
-        await Promise.all(
-            this.cortarNoList.map(async (cortarNo) => {
+        await Promise.all([
+            // 일반 매물 수집
+            ...this.cortarNoList.map(async (cortarNo) => {
                 return this.mapConditionsWithCortarNo(
                     cortarNo,
                     DefaultCrawlingConditions,
                 );
             }),
-        );
-
-        // 커스텀 매물 수집
-        Object.entries(CustomCrawlingConditions).map(
-            async ([cortarNo, groupedArticleConditions]: [
-                CortarNo,
-                ArticleConditionsGroupedByRealEstateType,
-            ]) => {
-                return this.mapConditionsWithCortarNo(
-                    cortarNo,
-                    groupedArticleConditions,
-                );
-            },
-        );
+            ...Object.entries(CustomCrawlingConditions).map(
+                async ([cortarNo, groupedArticleConditions]: [
+                    CortarNo,
+                    ArticleConditionsGroupedByRealEstateType,
+                ]) => {
+                    return this.mapConditionsWithCortarNo(
+                        cortarNo,
+                        groupedArticleConditions,
+                    );
+                },
+            ),
+        ]);
     }
 
     /**
@@ -88,7 +96,7 @@ export class NaverLandCrawlingScheduler {
      * @param groupedArticleConditions
      * @private
      */
-    private mapConditionsWithCortarNo(
+    private async mapConditionsWithCortarNo(
         cortarNo: CortarNo,
         groupedArticleConditions: ArticleConditionsGroupedByRealEstateType,
     ) {
@@ -96,7 +104,7 @@ export class NaverLandCrawlingScheduler {
             groupedArticleConditions,
         ) as CrawlingConditionEntry[];
 
-        entries.map(async ([realEstateTypeCode, conditions]) => {
+        return entries.map(async ([realEstateTypeCode, conditions]) => {
             return this.mapAddCrawlingArticleJobByConditions(
                 cortarNo,
                 realEstateTypeCode,
@@ -112,7 +120,7 @@ export class NaverLandCrawlingScheduler {
      * @param conditions
      * @private
      */
-    private mapAddCrawlingArticleJobByConditions(
+    private async mapAddCrawlingArticleJobByConditions(
         cortarNo: CortarNo,
         realEstateTypeCode: SearchRealEstateTypeCode,
         conditions: ArticleConditionsGroupedByTradeType,
@@ -124,7 +132,7 @@ export class NaverLandCrawlingScheduler {
             ]: SubCrawlingConditionEntry) => {
                 return articleListRequestDto.map(
                     async (articleListRequestDto) =>
-                        this.crawlerQueueService.addCrawlingArticleJob({
+                        this.crawlingArticleQueue.add({
                             ...articleListRequestDto,
                             cortarNo,
                             rletTpCd: [realEstateTypeCode],

@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Nullable } from '@common/types';
 import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
-import { ArticleKeyEntity } from '../entities';
+import { ArticleKeyEntity } from './index';
 
 @Injectable()
 export class ArticleKeyService {
@@ -19,7 +19,7 @@ export class ArticleKeyService {
      * @param data
      * @param options
      */
-    public async create(
+    public async save(
         articleId: string,
         data: FrontApiResult<FrontApiOperationId.ArticleKey>,
         options?: SaveOptions,

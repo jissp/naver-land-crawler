@@ -1,38 +1,21 @@
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Nullable } from '@common/types';
 import { KakaoGeoClient } from '@modules/kakao-client/geo';
-import { KakaoGeoAddressEntity } from './kakao-geo-address.entity';
+import { KakaoGeoAddressService } from '@modules/kakao-geo-address';
 import { Coordinate } from './coord2address.interface';
 
 @Injectable()
 export class Coord2addressService {
     constructor(
         private readonly kakaoGeoClient: KakaoGeoClient,
-        @InjectRepository(KakaoGeoAddressEntity)
-        private readonly kakaoGeoAddressRepository: Repository<KakaoGeoAddressEntity>,
+        private readonly kakaoGeoAddressService: KakaoGeoAddressService,
     ) {}
 
     /**
      * @param coordinate
      */
-    public async findByCoord(
-        coordinate: Coordinate,
-    ): Promise<Nullable<KakaoGeoAddressEntity>> {
-        return await this.kakaoGeoAddressRepository.findOneBy({
-            latitude: coordinate.lat,
-            longitude: coordinate.lng,
-        });
-    }
-
-    /**
-     * @param coordinate
-     */
-    public async findByCoordWithCollect(
-        coordinate: Coordinate,
-    ): Promise<Nullable<KakaoGeoAddressEntity>> {
-        const kakaoGeoAddress = await this.findByCoord(coordinate);
+    public async findByCoordWithCollect(coordinate: Coordinate) {
+        const kakaoGeoAddress =
+            await this.kakaoGeoAddressService.findByCoord(coordinate);
         if (kakaoGeoAddress) {
             return kakaoGeoAddress;
         }
@@ -47,14 +30,9 @@ export class Coord2addressService {
     public async collectCoordToAddress(coordinate: Coordinate) {
         const kakaoAddress = await this.callKakaoCoord2addressApi(coordinate);
 
-        const kakaoGeoAddress = this.kakaoGeoAddressRepository.create({
-            latitude: coordinate.lat,
-            longitude: coordinate.lng,
-            data: kakaoAddress,
-        });
-
-        return this.kakaoGeoAddressRepository.save<KakaoGeoAddressEntity>(
-            kakaoGeoAddress,
+        return this.kakaoGeoAddressService.upsertCoord(
+            coordinate,
+            kakaoAddress,
         );
     }
 

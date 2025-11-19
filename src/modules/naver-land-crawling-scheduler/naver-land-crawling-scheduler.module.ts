@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
-import { CrawlerQueueModule } from '@modules/crawler-queue/crawler-queue.module';
+import { QueueModule } from '@modules/queue';
+import { NaverLandQueue } from '@modules/naver-land-crawler';
 import { NaverLandCrawlingScheduler } from './naver-land-crawling.scheduler';
 
+const queueTypes = [NaverLandQueue.CrawlingArticles];
+
 @Module({
-    imports: [CrawlerQueueModule],
-    providers: [NaverLandCrawlingScheduler],
+    imports: [QueueModule.forFeature(queueTypes)],
+    providers: [
+        ...QueueModule.getQueueProviders(queueTypes),
+        NaverLandCrawlingScheduler,
+    ],
 })
 export class NaverLandCrawlingSchedulerModule {}

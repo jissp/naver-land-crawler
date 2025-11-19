@@ -9,14 +9,16 @@ export enum NaverLandQueue {
     CoordinateToAddress = 'CoordinateToAddress',
 }
 
+interface NaverLandQueueJobDataMap {
+    [NaverLandQueue.CrawlingArticles]: Partial<ArticleListRequestDto>;
+    [NaverLandQueue.ArticleTransform]: ArticleItem;
+    [NaverLandQueue.CoordinateToAddress]: CoordinateToAddressJobData;
+}
+
 export type NaverLandQueueJobData<T extends NaverLandQueue> =
-    T extends NaverLandQueue.CrawlingArticles
-        ? Partial<ArticleListRequestDto>
-        : T extends NaverLandQueue.ArticleTransform
-          ? ArticleItem
-          : T extends NaverLandQueue.CoordinateToAddress
-            ? CoordinateToAddressJobData
-            : never;
+    T extends keyof NaverLandQueueJobDataMap
+        ? NaverLandQueueJobDataMap[T]
+        : never;
 
 export interface CoordinateToAddressJobData {
     articleNo: string;

@@ -44,7 +44,6 @@ export class ArticleTransformer {
      */
     private buildArticleInfo(article: ArticleEntity) {
         article.articleNo = this.article.atclNo;
-        article.articleNo = this.article.atclNo;
         article.atclNm = this.article.atclNm;
         article.rletTpNm = this.article.rletTpNm;
         article.tradTpCd = this.article.tradTpCd;
@@ -244,11 +243,16 @@ export class ArticleTransformer {
         }
 
         const roomTags = Object.values(RoomTag);
-        const roomIndex = roomTags.indexOf(
-            roomTags.find((tag) => this.article.tagList.includes(tag)),
+        const matchingRoomTag = roomTags.find((tag) =>
+            this.article.tagList.includes(tag),
         );
+        if (!matchingRoomTag) {
+            return 1;
+        }
 
-        return roomIndex === -1 ? 1 : roomIndex + 1;
+        const roomIndex = roomTags.indexOf(matchingRoomTag);
+
+        return roomIndex + 1;
     }
 
     /**
@@ -269,9 +273,13 @@ export class ArticleTransformer {
 
         const [floor, maxFloor] = this.article.flrInfo.split('/');
 
+        const parseNumberOrNull = (value: string): Nullable<number> => {
+            return isNaN(Number(value)) ? null : Number(value);
+        };
+
         return {
-            floor: isNaN(Number(floor)) ? undefined : Number(floor),
-            maxFloor: isNaN(Number(maxFloor)) ? undefined : Number(maxFloor),
+            floor: parseNumberOrNull(floor),
+            maxFloor: parseNumberOrNull(maxFloor),
         };
     }
 

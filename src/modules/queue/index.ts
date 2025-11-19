@@ -1,2 +1,2 @@
-export * from './queue-service.abstract';
+export * from './queue.decorator';
 export * from './queue.module';

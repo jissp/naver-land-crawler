@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
-import { ComplexEntity } from '../entities';
+import { ComplexEntity } from './index';
 
 @Injectable()
 export class ComplexService {
@@ -16,7 +16,7 @@ export class ComplexService {
      * @param complexNumber
      * @param data
      */
-    public async create(
+    public async save(
         complexNumber: number,
         data: FrontApiResult<FrontApiOperationId.Complex>,
     ) {
@@ -32,7 +32,7 @@ export class ComplexService {
      * Complex 정보가 존재하는지 체크한다.
      * @param complexNumber
      */
-    public async existByComplexNumber(complexNumber: number) {
+    public async exist(complexNumber: number) {
         return this.complexRepository.existsBy({
             complexNumber,
         });
@@ -42,7 +42,7 @@ export class ComplexService {
      * Complex 정보를 조회한다.
      * @param complexNumber
      */
-    public async findByComplexNumber(complexNumber: number) {
+    public async find(complexNumber: number) {
         return this.complexRepository.findOneBy({
             complexNumber,
         });

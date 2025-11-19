@@ -6,7 +6,7 @@ export function PreventConcurrentExecution(): MethodDecorator {
     let isExecuting = false;
 
     return (target, propertyKey, descriptor: PropertyDescriptor) => {
-        const originalFunc = descriptor.value;
+        const originalMethod = descriptor.value;
 
         descriptor.value = async function (...args: any[]) {
             if (isExecuting) {
@@ -15,11 +15,11 @@ export function PreventConcurrentExecution(): MethodDecorator {
 
             isExecuting = true;
 
-            return Promise.resolve(originalFunc.apply(this, args)).finally(
-                () => {
-                    isExecuting = false;
-                },
-            );
+            try {
+                return Promise.resolve(originalMethod.apply(this, args));
+            } finally {
+                isExecuting = false;
+            }
         };
 
         return descriptor;

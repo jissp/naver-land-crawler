@@ -2,18 +2,20 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    Index,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { FrontApiOperationId, FrontApiResult } from '@modules/naver-land-front';
 
 @Entity({
-    name: 'complexes',
+    name: 'complex_ev_stations',
 })
-export class ComplexEntity {
+export class ComplexEvStationEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Index()
     @Column({
         type: 'bigint',
         unsigned: true,
@@ -23,7 +25,7 @@ export class ComplexEntity {
     @Column({
         type: 'json',
     })
-    data?: FrontApiResult<FrontApiOperationId.Complex>;
+    data?: FrontApiResult<FrontApiOperationId.ComplexEvStation>;
 
     @CreateDateColumn({
         type: 'timestamp',
