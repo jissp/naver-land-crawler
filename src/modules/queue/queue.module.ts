@@ -1,5 +1,6 @@
-import { DynamicModule } from '@nestjs/common';
-import { BullModule, BullRootModuleOptions } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { DynamicModule, Provider } from '@nestjs/common';
+import { BullModule, BullRootModuleOptions, getQueueToken } from '@nestjs/bull';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 export class QueueModule {
@@ -20,11 +21,13 @@ export class QueueModule {
         };
     }
 
-    public static forFeature(options?: {
-        prefix?: string;
-        queueTypes: string[];
-    }): DynamicModule {
-        if (!options?.queueTypes) {
+    public static forFeature(
+        queueTypes: string[],
+        options?: {
+            prefix?: string;
+        },
+    ): DynamicModule {
+        if (!queueTypes.length) {
             return {
                 module: QueueModule,
                 imports: [],
@@ -33,14 +36,7 @@ export class QueueModule {
         }
 
         const queues = BullModule.registerQueue(
-            ...options.queueTypes.map((queueType) => {
-                const prefix = options?.prefix || queueType;
-
-                return {
-                    name: queueType,
-                    prefix: `{${prefix}}`,
-                };
-            }),
+            ...this.createQueueConfigurations(queueTypes, options),
         );
 
         return {
@@ -48,5 +44,30 @@ export class QueueModule {
             imports: [queues],
             exports: [queues],
         };
+    }
+
+    public static getQueueProviders(queueTypes: string[]): Provider[] {
+        if (!queueTypes.length) {
+            return [];
+        }
+
+        return queueTypes.map((queueType) => ({
+            provide: queueType,
+            inject: [getQueueToken(queueType)],
+            useFactory: (queue: Queue) => queue,
+        }));
+    }
+
+    private static createQueueConfigurations(
+        queueTypes: string[],
+        options?: { prefix?: string },
+    ) {
+        return queueTypes.map((queueType) => {
+            const prefix = options?.prefix || queueType;
+            return {
+                name: queueType,
+                prefix: `{${prefix}}`,
+            };
+        });
     }
 }
